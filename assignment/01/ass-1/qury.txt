@@ -1,0 +1,59 @@
+Hafiz Bashir Ahmad
+
+
+
+----------------------------------------------------------------Part  A-----------------------------------------------------
+
+Select city,state,zip From CUSTOMER;
+
+
+Select empname,department,phone From EMPLOYEE WHERE phone LIKE '3%';
+
+Select * From RESOURCETBL WHERE rate BETWEEN(10 and 20) ORDER BY rate;
+
+
+Select eventno,dateauth,status From EVENTREQUEST Where dateauth Like '2013-07-%' and status='Approved' OR status='Denied';
+
+
+Select locno,locname From LOCATION,FACILITY Where FACILITY.facname='Basketball arena' and LOCATION.facno=FACILITY.facno;
+
+
+Select EVENTPLAN.planno,COUNT(EVENTPLANLINE.planno), SUM(EVENTPLANLINE.NumberFld) From EVENTPLAN,EVENTPLANLINE where EVENTPLAN.planno=EVENTPLANLINE.planno Group by planno;
+
+----------------------------------------------------------------Part  C------------------------------------------------------
+
+Insert into FACILITY Values('F104','Swimming Pool');
+
+Insert Into LOCATION Values('L107','F104','Door');
+
+Insert Into LOCATION Values('L108','F104','Locker Room');
+
+Update LOCATION SET locname = 'Gate' WHERE locname='Door';
+
+Delete From LOCATION Where locno='L108';
+
+-----------------------------------------------------------------Part B-------------------------------------------------------
+
+
+Select EVENTREQUEST.eventno,dateheld,Count(Notes) From EVENTPLAN,EVENTREQUEST Where EVENTREQUEST.eventno=EVENTPLAN.eventno  AND workdate Like '2013-12-%' Group by eventno having COUNT(Notes)>1 ;
+
+
+
+Select planno,EVENTREQUEST.eventno,workdate,activity From EVENTPLAN,EVENTREQUEST,FACILITY Where workdate Like '2013-12-%'
+AND EVENTREQUEST.eventno=EVENTPLAN.eventno AND FACILITY.facname Like 'Basketball arena' AND EVENTREQUEST.facno=FACILITY.facno;
+       
+
+
+
+Select evntr.eventno,EVENTPLAN.workdate,status,estcost FROM EVENTREQUEST evntr , FACILITY fac, EVENTPLAN, EMPLOYEE
+       Where fac.facno=evntr.facno AND facname LIKE 'Basket Ball' AND dateheld between '2013-10-1'  AND '2013-12-31'
+       AND evntr.eventno=EVENTPLAN.eventno AND EVENTPLAN.empno = EMPLOYEE.empno
+       AND empname LIKE 'Marry%';
+
+ Select epl.planno,lineno,resname,numberfld,locname,timestart,timeend From EVENTPLANLINE epl,RESOURCETBL,LOCATION,EVENTPLAN,FACILITY
+   Where LOCATION.locno=epl.locno AND LOCATION.facno=FACILITY.facno
+   AND facname='Basketball arena' AND activity='Operation'
+   AND workdate BETWEEN '2013-10-1' AND '2013-12-31'
+   AND epl.resno=RESOURCETBL.resno AND epl.planno=EVENTPLAN.planno;
+
+#
